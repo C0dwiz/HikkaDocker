@@ -1,0 +1,33 @@
+#include <tunables/global>
+
+profile hikka flags=(attach_disconnected,mediate_deleted) {
+  # Разрешаем базовые операции
+  network inet,
+  network loopback,
+
+  # Ограничиваем доступ к файловой системе
+  file,
+  /app/** r,  # Чтение только внутри рабочей директории
+  /usr/bin/python3 mr,  # Разрешаем чтение и выполнение Python
+  /lib/x86_64-linux-gnu/** mr,  # Разрешаем библиотеки
+  /etc/** r,  # Разрешаем чтение конфигурационных файлов
+  /tmp/** wrc,  # Разрешаем временные файлы
+
+  # Разрешаем доступ к устройству /dev/urandom (для случайных чисел)
+  /dev/urandom r,
+  /dev/random r,
+
+  # Разрешаем доступ к /proc/sys/kernel/random/uuid (может понадобиться)
+  /proc/sys/kernel/random/uuid r,
+
+  # Запрещаем исходящие сетевые соединения (более строгий профиль)
+  deny network inet raw,
+  deny network inet dgram,
+  deny network inet tcp,
+  deny network inet udp,
+  deny network packet,
+  deny network raw,
+
+  # Запрещаем выполнение сторонних скриптов
+  deny /** w,
+}
