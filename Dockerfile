@@ -22,7 +22,7 @@ RUN apt-get update && \
 WORKDIR /app
 
 # Клонирование репозитория (shallow clone для уменьшения размера образа)
-RUN git clone --depth 1 https://github.com/tot882/hikka.git .
+RUN git clone --depth 1 https://github.com/coddrago/Heroku.git .
 
 # Создание виртуального окружения
 RUN python -m venv /opt/venv
